@@ -1,0 +1,59 @@
+# Dotfiles
+
+Portable Claude Code configurations (MCP servers, skills, settings) and shell customizations.
+
+## Quick Start
+
+```bash
+git clone git@github.com:amydeng/dotfiles.git ~/Documents/Projects/dotfiles
+cd ~/Documents/Projects/dotfiles
+./install.sh
+# Fill in your API keys in .env
+# Restart your shell and Claude Code
+```
+
+## What Gets Installed
+
+| Config | Location | Method |
+|---|---|---|
+| Claude settings + MCP servers | `~/.claude/settings.json` | Symlink |
+| `/search-everything` skill | `~/.claude/skills/search-everything.md` | Symlink |
+| Global CLAUDE.md conventions | `~/.claude/CLAUDE.md` | Symlink |
+| `grok-search-mcp` on PATH | `dotfiles/bin/` added to `$PATH` | `.zshrc` line |
+| Env vars (API keys) | `dotfiles/.env` sourced | `.zshrc` line |
+
+## Setup Guides
+
+### Grok (X/Twitter Search)
+
+1. Get an API key from [x.ai console](https://console.x.ai/)
+2. Add it to `.env`:
+   ```
+   XAI_API_KEY=xai-your-actual-key
+   ```
+3. Restart your shell — the `grok-search-mcp` server reads the key from the environment.
+
+### Gmail MCP
+
+1. Create an OAuth 2.0 Client ID in [Google Cloud Console](https://console.cloud.google.com/apis/credentials):
+   - Application type: **Desktop app**
+   - Enable the **Gmail API** for your project
+2. Download the OAuth client JSON and save it as `~/.gmail-mcp/gcp-oauth.keys.json` (see `gmail-mcp/gcp-oauth.keys.json.example` for the expected structure)
+3. Start Claude Code — it will open a browser window to complete the Gmail OAuth flow on first use.
+
+### Skills
+
+**`/search-everything`** — Searches both the web (via `WebSearch`) and X/Twitter (via `mcp__grok__search_x`) in parallel, then synthesizes results into a unified summary grouped by theme.
+
+To add a new skill, create a `.md` file in `claude/skills/` and add a symlink line to `install.sh`.
+
+## Updating
+
+Edit files in this repo, commit, and push. On other machines:
+
+```bash
+cd ~/Documents/Projects/dotfiles
+git pull
+# Settings/skills/CLAUDE.md update instantly via symlinks
+# Re-run ./install.sh only if install.sh itself changed
+```
