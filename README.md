@@ -20,7 +20,7 @@ cd ~/dotfiles
 | `/search-everything` skill | `~/.claude/skills/search-everything.md` | Symlink |
 | Global CLAUDE.md conventions | `~/.claude/CLAUDE.md` | Symlink |
 | `grok-search-mcp` on PATH | `dotfiles/bin/` added to `$PATH` | `.zshrc` line |
-| Shell aliases (`cc`, ...) | `dotfiles/shell/aliases.zsh` sourced | `.zshrc` line |
+| Shell aliases (`cc`, ...) | `dotfiles/shell/aliases.sh` sourced | `.zshrc` line |
 | Env vars (API keys) | `dotfiles/.env` sourced | `.zshrc` line |
 
 ## Setup Guides
@@ -54,7 +54,7 @@ To add a new skill, create a `.md` file in `claude/skills/` and add a symlink li
 |---|---|
 | `cc` | `claude --dangerously-skip-permissions` |
 
-To add more aliases, edit `shell/aliases.zsh` — changes propagate via `git pull` without re-running `install.sh`.
+To add more aliases, edit `shell/aliases.sh` — changes propagate via `git pull` without re-running `install.sh`.
 
 ## Updating
 

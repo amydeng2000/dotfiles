@@ -46,30 +46,43 @@ if [ ! -f ~/.gmail-mcp/gcp-oauth.keys.json ]; then
     echo "    Then start Claude Code — it will open a browser for Gmail OAuth."
 fi
 
-# --- Shell (PATH in .zshenv for all zsh invocations, including non-interactive) ---
-if ! grep -q "dotfiles/bin" ~/.zshenv 2>/dev/null; then
-    echo "" >> ~/.zshenv
-    echo "# Dotfiles" >> ~/.zshenv
-    echo "export PATH=\"\$HOME/.local/bin:\$PATH\"" >> ~/.zshenv
-    echo "export PATH=\"$DOTFILES_DIR/bin:\$PATH\"" >> ~/.zshenv
-    echo "  added PATH entries to ~/.zshenv"
-fi
+# --- Shell setup (supports both zsh and bash) ---
+setup_shell_rc() {
+    local rc_file="$1"
+    local env_file="$2"  # .zshenv for zsh, .bashrc for bash (bash has no separate env file)
+    local shell_name="$2"
 
-# Source shell aliases
-if ! grep -q "shell/aliases.zsh" ~/.zshrc 2>/dev/null; then
-    echo "" >> ~/.zshrc
-    echo "# Dotfiles aliases" >> ~/.zshrc
-    echo "source \"$DOTFILES_DIR/shell/aliases.zsh\"" >> ~/.zshrc
-    echo "  added aliases sourcing to ~/.zshrc"
-fi
+    # PATH entries
+    if ! grep -q "dotfiles/bin" "$env_file" 2>/dev/null; then
+        echo "" >> "$env_file"
+        echo "# Dotfiles" >> "$env_file"
+        echo "export PATH=\"\$HOME/.local/bin:\$PATH\"" >> "$env_file"
+        echo "export PATH=\"$DOTFILES_DIR/bin:\$PATH\"" >> "$env_file"
+        echo "  added PATH entries to $env_file"
+    fi
 
-# Add .env loading to .zshrc (only needed interactively)
-if ! grep -q "source.*dotfiles/.env" ~/.zshrc 2>/dev/null; then
-    echo "" >> ~/.zshrc
-    echo "# Dotfiles" >> ~/.zshrc
-    echo "[ -f \"$DOTFILES_DIR/.env\" ] && set -a && source \"$DOTFILES_DIR/.env\" && set +a" >> ~/.zshrc
-    echo "  added .env loading to ~/.zshrc"
-fi
+    # Shell aliases
+    if ! grep -q "shell/aliases.sh" "$rc_file" 2>/dev/null; then
+        echo "" >> "$rc_file"
+        echo "# Dotfiles aliases" >> "$rc_file"
+        echo "source \"$DOTFILES_DIR/shell/aliases.sh\"" >> "$rc_file"
+        echo "  added aliases sourcing to $rc_file"
+    fi
+
+    # .env loading
+    if ! grep -q "source.*dotfiles/.env" "$rc_file" 2>/dev/null; then
+        echo "" >> "$rc_file"
+        echo "# Dotfiles" >> "$rc_file"
+        echo "[ -f \"$DOTFILES_DIR/.env\" ] && set -a && source \"$DOTFILES_DIR/.env\" && set +a" >> "$rc_file"
+        echo "  added .env loading to $rc_file"
+    fi
+}
+
+# Configure zsh
+setup_shell_rc ~/.zshrc ~/.zshenv
+
+# Configure bash (PATH, aliases, and .env all go in .bashrc)
+setup_shell_rc ~/.bashrc ~/.bashrc
 
 # --- Env ---
 if [ ! -f "$DOTFILES_DIR/.env" ]; then
