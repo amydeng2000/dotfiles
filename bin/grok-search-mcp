@@ -3,20 +3,34 @@
 
 import json
 import os
+import pathlib
 import sys
 import urllib.request
 
+# Load .env as fallback so the server works even when XAI_API_KEY
+# isn't in the process environment (e.g. fresh VM / Codespace).
+_dotfiles_dir = pathlib.Path(__file__).resolve().parent.parent
+_env_file = _dotfiles_dir / ".env"
+if _env_file.exists():
+    for _line in _env_file.read_text().splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith("#") and "=" in _line:
+            _key, _, _value = _line.partition("=")
+            os.environ.setdefault(_key.strip(), _value.strip())
+
 API_KEY = os.environ.get("XAI_API_KEY", "")
-API_URL = "https://api.x.ai/v1/chat/completions"
-MODEL = "grok-3-latest"
+if not API_KEY:
+    print("warning: XAI_API_KEY is not set (checked env and .env)", file=sys.stderr)
+API_URL = "https://api.x.ai/v1/responses"
+MODEL = os.environ.get("XAI_MODEL", "grok-4-fast")
 
 
 def search_x(query: str, max_results: int = 10) -> str:
     """Search X/Twitter content via Grok and return a summary."""
     payload = json.dumps({
         "model": MODEL,
-        "search_parameters": {"mode": "on"},
-        "messages": [
+        "tools": [{"type": "x_search"}],
+        "input": [
             {
                 "role": "system",
                 "content": (
@@ -43,10 +57,18 @@ def search_x(query: str, max_results: int = 10) -> str:
         method="POST",
     )
 
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=60) as resp:
         data = json.loads(resp.read().decode("utf-8"))
 
-    return data["choices"][0]["message"]["content"]
+    # Extract text from the responses API output format
+    output = data.get("output", [])
+    texts = []
+    for item in output:
+        if item.get("type") == "message":
+            for content in item.get("content", []):
+                if content.get("type") == "output_text":
+                    texts.append(content["text"])
+    return "\n".join(texts) if texts else json.dumps(data)
 
 
 # --- MCP Protocol (JSON-RPC over stdio) ---

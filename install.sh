@@ -23,8 +23,7 @@ ln -sf "$DOTFILES_DIR/bin/grok-search-mcp" ~/.local/bin/grok-search-mcp
 claude mcp add-json -s user grok "$(cat <<'MCPEOF'
 {
   "type": "stdio",
-  "command": "${HOME}/.local/bin/grok-search-mcp",
-  "env": { "XAI_API_KEY": "${XAI_API_KEY}" }
+  "command": "${HOME}/.local/bin/grok-search-mcp"
 }
 MCPEOF
 )"

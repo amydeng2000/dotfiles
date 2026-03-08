@@ -5,8 +5,8 @@ Portable Claude Code configurations (MCP servers, skills, settings) and shell cu
 ## Quick Start
 
 ```bash
-git clone git@github.com:amydeng/dotfiles.git ~/Documents/Projects/dotfiles
-cd ~/Documents/Projects/dotfiles
+git clone git@github.com:amydeng/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 ./install.sh
 # Fill in your API keys in .env
 # Restart your shell and Claude Code
@@ -31,7 +31,7 @@ cd ~/Documents/Projects/dotfiles
    ```
    XAI_API_KEY=xai-your-actual-key
    ```
-3. Restart your shell — the `grok-search-mcp` server reads the key from the environment.
+3. Restart Claude Code. The server reads the key directly from `.env`.
 
 ### Gmail MCP
 
@@ -52,7 +52,7 @@ To add a new skill, create a `.md` file in `claude/skills/` and add a symlink li
 Edit files in this repo, commit, and push. On other machines:
 
 ```bash
-cd ~/Documents/Projects/dotfiles
+cd ~/dotfiles
 git pull
 # Settings/skills/CLAUDE.md update instantly via symlinks
 # Re-run ./install.sh only if install.sh itself changed
