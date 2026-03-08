@@ -26,8 +26,7 @@ claude mcp add-json -s user grok "$(cat <<'MCPEOF'
   "command": "${HOME}/.local/bin/grok-search-mcp"
 }
 MCPEOF
-)"
-echo "  registered grok MCP server"
+)" 2>/dev/null && echo "  registered grok MCP server" || echo "  grok MCP server already registered"
 
 # Register gmail MCP server (user scope)
 claude mcp add-json -s user gmail "$(cat <<'MCPEOF'
@@ -37,8 +36,7 @@ claude mcp add-json -s user gmail "$(cat <<'MCPEOF'
   "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
 }
 MCPEOF
-)"
-echo "  registered gmail MCP server"
+)" 2>/dev/null && echo "  registered gmail MCP server" || echo "  gmail MCP server already registered"
 
 if [ ! -f ~/.gmail-mcp/gcp-oauth.keys.json ]; then
     echo ""
