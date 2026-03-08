@@ -57,6 +57,14 @@ if ! grep -q "dotfiles/bin" ~/.zshenv 2>/dev/null; then
     echo "  added PATH entries to ~/.zshenv"
 fi
 
+# Source shell aliases
+if ! grep -q "shell/aliases.zsh" ~/.zshrc 2>/dev/null; then
+    echo "" >> ~/.zshrc
+    echo "# Dotfiles aliases" >> ~/.zshrc
+    echo "source \"$DOTFILES_DIR/shell/aliases.zsh\"" >> ~/.zshrc
+    echo "  added aliases sourcing to ~/.zshrc"
+fi
+
 # Add .env loading to .zshrc (only needed interactively)
 if ! grep -q "source.*dotfiles/.env" ~/.zshrc 2>/dev/null; then
     echo "" >> ~/.zshrc

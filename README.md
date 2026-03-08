@@ -20,6 +20,7 @@ cd ~/dotfiles
 | `/search-everything` skill | `~/.claude/skills/search-everything.md` | Symlink |
 | Global CLAUDE.md conventions | `~/.claude/CLAUDE.md` | Symlink |
 | `grok-search-mcp` on PATH | `dotfiles/bin/` added to `$PATH` | `.zshrc` line |
+| Shell aliases (`cc`, ...) | `dotfiles/shell/aliases.zsh` sourced | `.zshrc` line |
 | Env vars (API keys) | `dotfiles/.env` sourced | `.zshrc` line |
 
 ## Setup Guides
@@ -46,6 +47,14 @@ cd ~/dotfiles
 **`/search-everything`** — Searches both the web (via `WebSearch`) and X/Twitter (via `mcp__grok__search_x`) in parallel, then synthesizes results into a unified summary grouped by theme.
 
 To add a new skill, create a `.md` file in `claude/skills/` and add a symlink line to `install.sh`.
+
+### Shell Aliases
+
+| Alias | Command |
+|---|---|
+| `cc` | `claude --dangerously-skip-permissions` |
+
+To add more aliases, edit `shell/aliases.zsh` — changes propagate via `git pull` without re-running `install.sh`.
 
 ## Updating
 
