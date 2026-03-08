@@ -8,11 +8,17 @@ echo "Installing dotfiles from $DOTFILES_DIR ..."
 # --- Claude Code ---
 mkdir -p ~/.claude/skills/search-everything ~/.gmail-mcp
 
-# Symlink settings.json, skills, and CLAUDE.md
+# Symlink settings.json, skills, CLAUDE.md, and plugins
 ln -sf "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
 ln -sf "$DOTFILES_DIR/claude/skills/search-everything/SKILL.md" ~/.claude/skills/search-everything/SKILL.md
 ln -sf "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
-echo "  symlinked settings.json, skills, and CLAUDE.md"
+rm -rf ~/.claude/plugins
+ln -sf "$DOTFILES_DIR/claude/plugins" ~/.claude/plugins
+echo "  symlinked settings.json, skills, CLAUDE.md, and plugins"
+
+# Install plugin marketplaces (cloned into plugins/marketplaces/)
+claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null && echo "  added claude-plugins-official marketplace" || echo "  claude-plugins-official marketplace already installed"
+claude plugin marketplace add obra/superpowers-marketplace 2>/dev/null && echo "  added superpowers-marketplace" || echo "  superpowers-marketplace already installed"
 
 # --- MCP Servers (registered via claude mcp, stored in ~/.claude.json) ---
 chmod +x "$DOTFILES_DIR/bin/grok-search-mcp"

@@ -1,3 +1,5 @@
 .env
 gcp-oauth.keys.json
 credentials.json
+claude/plugins/*
+!claude/plugins/.gitkeep
