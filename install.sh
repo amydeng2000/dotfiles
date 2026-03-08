@@ -15,10 +15,7 @@ ln -sf "$DOTFILES_DIR/claude/CLAUDE.md" ~/.claude/CLAUDE.md
 rm -rf ~/.claude/plugins
 ln -sf "$DOTFILES_DIR/claude/plugins" ~/.claude/plugins
 echo "  symlinked settings.json, skills, CLAUDE.md, and plugins"
-
-# Install plugin marketplaces (cloned into plugins/marketplaces/)
-claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null && echo "  added claude-plugins-official marketplace" || echo "  claude-plugins-official marketplace already installed"
-claude plugin marketplace add obra/superpowers-marketplace 2>/dev/null && echo "  added superpowers-marketplace" || echo "  superpowers-marketplace already installed"
+echo "  (plugin marketplaces configured via extraKnownMarketplaces in settings.json)"
 
 # --- MCP Servers (registered via claude mcp, stored in ~/.claude.json) ---
 chmod +x "$DOTFILES_DIR/bin/grok-search-mcp"
