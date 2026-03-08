@@ -1,4 +1,8 @@
 {
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "github@claude-plugins-official": true
+  },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
       "source": {
@@ -8,8 +12,5 @@
     }
   },
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high",
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
-  }
+  "effortLevel": "high"
 }
