@@ -39,7 +39,7 @@ cd ~/dotfiles
 1. Create an OAuth 2.0 Client ID in [Google Cloud Console](https://console.cloud.google.com/apis/credentials):
    - Application type: **Desktop app**
    - Enable the **Gmail API** for your project
-2. Download the OAuth client JSON and save it as `~/.gmail-mcp/gcp-oauth.keys.json` (see `gmail-mcp/gcp-oauth.keys.json.example` for the expected structure)
+2. Download the OAuth client JSON and save it as `~/.gmail-mcp/gcp-oauth.keys.json` (see `gcp-oauth.keys.json.example` in the repo root for the expected structure)
 3. Start Claude Code — it will open a browser window to complete the Gmail OAuth flow on first use.
 
 ### Skills

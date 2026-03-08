@@ -42,7 +42,7 @@ if [ ! -f ~/.gmail-mcp/gcp-oauth.keys.json ]; then
     echo ""
     echo "  ACTION NEEDED: Gmail MCP"
     echo "    Copy your gcp-oauth.keys.json to ~/.gmail-mcp/"
-    echo "    See gmail-mcp/gcp-oauth.keys.json.example for the format."
+    echo "    See gcp-oauth.keys.json.example in the dotfiles repo for the format."
     echo "    Then start Claude Code — it will open a browser for Gmail OAuth."
 fi
 
